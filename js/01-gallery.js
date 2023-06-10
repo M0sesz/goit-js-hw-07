@@ -3,28 +3,18 @@ import { galleryItems } from "./gallery-items.js";
 const galleryList = document.querySelector(".gallery");
 
 const createGalleryItem = ({ preview, original, description }) => {
-  const item = document.createElement("li");
-  item.classList.add("gallery__item");
-
-  const link = document.createElement("a");
-  link.classList.add("gallery__link");
-  link.href = original;
-
-  const image = document.createElement("img");
-  image.classList.add("gallery__image");
-  image.src = preview;
-  image.alt = description;
-  image.setAttribute("data-source", original);
-
-  link.appendChild(image);
-  item.appendChild(link);
-
-  return item;
+  return `
+    <li class="gallery__item">
+      <a class="gallery__link" href="${original}">
+        <img class="gallery__image" src="${preview}" alt="${description}" data-source="${original}">
+      </a>
+    </li>
+  `;
 };
 
 const renderGallery = (items) => {
-  const galleryElements = items.map(createGalleryItem);
-  galleryList.append(...galleryElements);
+  const galleryElements = items.map(createGalleryItem).join("");
+  galleryList.innerHTML = galleryElements;
 };
 
 renderGallery(galleryItems);
